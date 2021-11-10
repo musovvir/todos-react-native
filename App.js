@@ -1,21 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  Button,
+  Alert,
+  Image,
+  View,
+  TouchableWithoutFeedback,
+  Platform
+} from "react-native";
 
 export default function App() {
+  const handleButtonPress = () =>
+    Alert.alert("isMusovvir?", "musovvir", [
+      { text: "Yes", onPress: () => console.log("Yes") },
+      { text: "No", onPress: () => console.log("No") }
+    ]);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.mainBlock}>
+      <View style={[styles.box, { backgroundColor: "yellow" }]}></View>
+      <View style={[styles.box, { backgroundColor: "red" }]}></View>
+      <View style={[styles.box, { backgroundColor: "green" }]}></View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainBlock: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
+  box: {
+    width: 100,
+    height: 100
+  }
 });
