@@ -1,41 +1,46 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  Button,
-  Alert,
-  Image,
-  View,
-  TouchableWithoutFeedback,
-  Platform
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, FlatList, Text } from "react-native";
+import Header from "./components/Header";
+import ListItem from "./components/ListItem";
+import Form from "./components/Form";
 
 export default function App() {
-  const handleButtonPress = () =>
-    Alert.alert("isMusovvir?", "musovvir", [
-      { text: "Yes", onPress: () => console.log("Yes") },
-      { text: "No", onPress: () => console.log("No") }
-    ]);
+  const [listOfItems, setListOfItems] = useState([
+    { text: "Купить молоко", key: "1" },
+    { text: "Помыть машину", key: "2" },
+    { text: "Купить картошку", key: "3" },
+    { text: "Стать миллионером", key: "4" }
+  ]);
+
+  const addHandler = (text) => {
+    setListOfItems((list) => {
+      return [
+        { text: text, key: Math.random().toString(36).substring(7) },
+        ...list
+      ];
+    });
+  };
+
+  const deleteHandler = (key) => {
+    setListOfItems((list) => {
+      return list.filter((listOfItems) => listOfItems.key !== key);
+    });
+  };
+
   return (
-    <SafeAreaView style={styles.mainBlock}>
-      <View style={[styles.box, { backgroundColor: "yellow" }]}></View>
-      <View style={[styles.box, { backgroundColor: "red" }]}></View>
-      <View style={[styles.box, { backgroundColor: "green" }]}></View>
-    </SafeAreaView>
+    <View>
+      <Header />
+      <Form addHandler={addHandler} />
+      <View>
+        <FlatList
+          data={listOfItems}
+          renderItem={({ item }) => (
+            <ListItem el={item} deleteHandler={deleteHandler} />
+          )}
+        />
+      </View>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  mainBlock: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  box: {
-    width: 100,
-    height: 100
-  }
-});
+const styles = StyleSheet.create({});
